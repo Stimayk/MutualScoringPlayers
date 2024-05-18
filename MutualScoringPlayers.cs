@@ -1,4 +1,4 @@
-﻿using CounterStrikeSharp.API.Core;
+using CounterStrikeSharp.API.Core;
 using CounterStrikeSharp.API.Core.Attributes.Registration;
 
 namespace MutualScoringPlayers
@@ -6,7 +6,7 @@ namespace MutualScoringPlayers
     public class MutualScoringPlayers : BasePlugin
     {
         public override string ModuleName => "Mutual Scoring Players";
-        public override string ModuleVersion => "v1.0";
+        public override string ModuleVersion => "v1.0.1";
         public override string ModuleAuthor => "E!N";
 
         private const int MaxPlayers = 64;
@@ -36,6 +36,9 @@ namespace MutualScoringPlayers
 
             int attackerId = (int)attacker.UserId;
             int victimId = (int)victim.UserId;
+
+            if (attackerId < 0 || attackerId > MaxPlayers || victimId < 0 || victimId > MaxPlayers)
+                return HookResult.Continue;
 
             if (lastKiller[victimId] == attackerId)
             {
